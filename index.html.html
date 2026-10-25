@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reto f(x) — Matemáticas desde el campo</title>
+<style>
+:root{--g:#18563b;--g2:#287d50;--gold:#f3bf4e;--ink:#23372b;--line:#dbe8d8}*{box-sizing:border-box}body{margin:0;background:#f3f8ef;color:var(--ink);font:16px/1.6 system-ui,Arial,sans-serif}header{background:linear-gradient(130deg,#123e2b,#287d50);color:white;text-align:center;padding:32px 18px}.cover-art{display:block;width:min(100%,520px);height:auto;margin:0 auto 16px;border-radius:16px;box-shadow:0 8px 22px #062b1740}header h1 .fx{color:#ff9b35;text-shadow:0 2px 5px #4b2b0a55}header h1{font-size:clamp(2.3rem,5vw,4rem);margin:12px 0;line-height:1.05color:#ff9b35;}header p{max-width:780px;margin:10px auto}.kicker{background:#fff0c3;color:#34512e;border-radius:99px;padding:5px 12px;font-weight:800;font-size:.85rem}nav{position:sticky;top:0;z-index:9;background:#e5f0dc;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:9px;box-shadow:0 3px 12px #0001}button,.btn{border:0;border-radius:11px;background:var(--g);color:white;padding:10px 14px;font:inherit;font-weight:750;cursor:pointer;text-decoration:none;display:inline-flex;justify-content:center;align-items:center;gap:6px}nav button{background:transparent;color:var(--g)}nav button.active,nav button:hover{background:var(--g);color:white}.secondary{background:#e9f3e4;color:#214d35;border:1px solid #c7ddc4}main{max-width:1080px;margin:auto;padding:16px}.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:clamp(16px,3vw,28px);margin:16px 0;box-shadow:0 5px 20px #183d230a}.panel h2{color:var(--g);font-size:clamp(1.5rem,3vw,2rem);line-height:1.2;margin-top:5px}.panel h3{color:#2a6545}.tag{font-size:.82rem;font-weight:800;color:#507a4c;letter-spacing:.07em;text-transform:uppercase}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:13px}.card,.video{padding:15px;background:#f5f9f1;border:1px solid #dfebda;border-radius:14px}.callout{background:#fff5d9;border-left:5px solid var(--gold);padding:13px 15px;border-radius:9px;margin:13px 0}.blue{background:#edf7fb;border-left:5px solid #72b0cc;padding:13px 15px;border-radius:9px}.formula{display:block;text-align:center;background:#e9f5e4;color:#155637;border-radius:11px;padding:12px;font-size:1.3rem;font-weight:850;margin:10px 0}.muted{font-size:.91rem;color:#637267}.hidden{display:none!important}svg{width:100%;height:auto;border-radius:14px;display:block}table{border-collapse:collapse;width:100%;margin:12px 0}td,th{border:1px solid var(--line);padding:9px;text-align:center}th{background:#e9f2e2}.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;align-items:end}label{font-weight:700;display:block;margin:7px 0 4px}input[type=number],input[type=text],select,textarea{width:100%;padding:10px;border:1px solid #aac3ab;border-radius:9px;font:inherit}input[type=checkbox]{width:auto}.answer{font-weight:750;min-height:26px}.good{color:#176b45}.bad{color:#a33229}.actions{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0}details{border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0}summary{font-weight:800;color:var(--g);cursor:pointer}canvas{width:100%;height:300px;border:1px solid var(--line);border-radius:12px}footer{text-align:center;padding:25px;color:#5d6e62}.certificate{border:7px double #b5cc8e;background:#fffdf4;text-align:center;padding:24px;border-radius:12px}@media(max-width:600px){main{padding:8px}nav button{font-size:.82rem;padding:8px}.panel{border-radius:14px}}@media print{header,nav,footer,.no-print{display:none!important}body{background:white}.panel{border:0;box-shadow:none}.hidden{display:none!important}}
+
+.drop-zone{min-height:68px;border:2px dashed #83ad91;border-radius:12px;padding:10px;background:#f5fbf5}
+.drag-card{display:inline-flex;align-items:center;justify-content:flex-start;white-space:normal;text-align:left;overflow-wrap:anywhere;word-break:normal;max-width:100%;min-width:0;color:var(--ink);background:#fff;border:1px solid #8db69b;border-radius:10px;padding:9px 12px;margin:5px;cursor:grab;box-shadow:0 2px 5px #00000010;touch-action:manipulation}
+.drag-card:focus{outline:3px solid #efc45b}.drop-zone.over{background:#e4f5e7;border-color:#287d50}
+.slope-formula{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}.fraction{display:inline-flex;flex-direction:column;align-items:stretch;vertical-align:middle;font-size:1em;line-height:1.25;text-align:center;min-width:54px}.fraction .numerator{padding:0 6px 3px;border-bottom:2px solid currentColor}.fraction .denominator{padding:3px 6px 0}.activity-note{font-size:.92rem;color:#52665a}.inline-answer{max-width:110px}.feedback{min-height:1.5em}#dragCards{display:flex;flex-wrap:wrap;align-items:stretch;gap:5px}#dragCards .drag-card{flex:0 1 auto}.drop-zone{overflow-wrap:anywhere;word-break:normal}.drop-zone .drag-card{margin:3px}@media(max-width:600px){.drag-card{font-size:.92rem;padding:8px 10px;max-width:100%}.row,.grid{min-width:0}.row>*,.grid>*{min-width:0}canvas{display:block;width:100%;height:auto;aspect-ratio:760/300}button,.btn{max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:center}input,select,textarea{min-width:0;max-width:100%}.formula{font-size:clamp(1rem,4vw,1.3rem);overflow-wrap:anywhere}}
+
+.sara-card{display:flex;align-items:center;gap:14px;margin:16px 0;padding:14px 16px;border:2px solid #c9e2c5;border-radius:16px;background:linear-gradient(120deg,#edf8ed,#fff8e6);min-width:0}
+.sara-avatar{width:64px;height:64px;flex:0 0 64px}
+.sara-avatar svg{width:64px;height:64px;display:block}
+.sara-copy{min-width:0;overflow-wrap:anywhere}
+.sara-name{font-weight:850;color:#18563b;margin-bottom:4px}
+.sara-copy p{margin:0}
+@media(max-width:480px){.sara-card{align-items:flex-start;padding:11px;gap:10px}.sara-avatar,.sara-avatar svg{width:52px;height:52px;flex-basis:52px}}
+
+/* Corrección definitiva: TODO el título de portada "Reto f(x)" en naranja */
+header h1,
+header h1 *,
+.cover h1,
+.cover h1 *,
+.hero h1,
+.hero h1 *,
+#cover h1,
+#cover h1 *,
+.portada h1,
+.portada h1 *,
+h1.cover-title,
+h1.cover-title *,
+.cover-title,
+.cover-title * {
+  color: #ff8c00 !important;
+  -webkit-text-fill-color: #ff8c00 !important;
+}
+
+</style></head><body>
+<header><svg class="cover-art" viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#87ceeb"/><stop offset="100%" stop-color="#c8e6c9"/></linearGradient>
+      <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#66bb6a"/><stop offset="100%" stop-color="#2e7d32"/></linearGradient>
+      <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4956a"/><stop offset="100%" stop-color="#c07040"/></linearGradient>
+    </defs>
+    <rect width="520" height="280" fill="url(#sky)" rx="16"/>
+    <ellipse cx="120" cy="180" rx="140" ry="90" fill="#388e3c" opacity=".6"/>
+    <ellipse cx="400" cy="185" rx="160" ry="95" fill="#2e7d32" opacity=".55"/>
+    <ellipse cx="260" cy="270" rx="310" ry="70" fill="url(#grass)"/>
+    <rect x="40" y="130" width="12" height="60" fill="#5d4037" rx="4"/>
+    <ellipse cx="46" cy="120" rx="28" ry="32" fill="#2e7d32"/>
+    <ellipse cx="46" cy="108" rx="22" ry="24" fill="#43a047"/>
+    <rect x="455" y="140" width="10" height="50" fill="#5d4037" rx="3"/>
+    <ellipse cx="460" cy="132" rx="24" ry="26" fill="#1b5e20"/>
+    <ellipse cx="460" cy="122" rx="18" ry="20" fill="#388e3c"/>
+    <circle cx="450" cy="48" r="26" fill="#fff176" opacity=".9"/>
+    <ellipse cx="160" cy="50" rx="45" ry="22" fill="white" opacity=".85"/>
+    <ellipse cx="140" cy="52" rx="30" ry="18" fill="white" opacity=".85"/>
+    <ellipse cx="185" cy="52" rx="30" ry="16" fill="white" opacity=".85"/>
+    <rect x="185" y="210" width="150" height="14" fill="#6d4c41" rx="4"/>
+    <rect x="200" y="224" width="14" height="40" fill="#795548" rx="3"/>
+    <rect x="306" y="224" width="14" height="40" fill="#795548" rx="3"/>
+    <rect x="245" y="158" width="38" height="50" fill="#1565c0" rx="8"/>
+    <rect x="240" y="200" width="48" height="28" fill="#1a237e" rx="6"/>
+    <rect x="244" y="220" width="16" height="36" fill="#c07040" rx="5"/>
+    <rect x="268" y="220" width="16" height="36" fill="#c07040" rx="5"/>
+    <ellipse cx="252" cy="256" rx="12" ry="7" fill="#212121"/>
+    <ellipse cx="276" cy="256" rx="12" ry="7" fill="#212121"/>
+    <rect x="257" y="148" width="14" height="14" fill="url(#skin)" rx="3"/>
+    <ellipse cx="264" cy="138" rx="22" ry="24" fill="url(#skin)"/>
+    <path d="M242 130 Q235 160 240 185 Q248 192 252 188 Q248 165 246 148 Q244 136 242 130Z" fill="#3e2723"/>
+    <path d="M286 130 Q293 160 288 185 Q280 192 276 188 Q280 165 282 148 Q284 136 286 130Z" fill="#3e2723"/>
+    <path d="M242 130 Q264 118 286 130 Q280 120 264 118 Q248 118 242 130Z" fill="#3e2723"/>
+    <path d="M244 126 Q264 120 284 126 Q274 132 264 130 Q254 132 244 126Z" fill="#4e342e"/>
+    <ellipse cx="256" cy="136" rx="3.5" ry="4" fill="#1a1a1a"/>
+    <ellipse cx="272" cy="136" rx="3.5" ry="4" fill="#1a1a1a"/>
+    <ellipse cx="255" cy="135" rx="1.2" ry="1.5" fill="white"/>
+    <ellipse cx="271" cy="135" rx="1.2" ry="1.5" fill="white"/>
+    <path d="M257 144 Q264 150 271 144" stroke="#7c3a1e" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M245 168 Q225 185 215 195" stroke="#c07040" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <path d="M283 168 Q300 182 310 192" stroke="#c07040" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <rect x="210" y="150" width="100" height="44" fill="#37474f" rx="6"/>
+    <rect x="213" y="153" width="94" height="38" fill="#1e88e5" rx="4"/>
+    <text x="218" y="165" font-family="monospace" font-size="7" fill="#fff176" font-weight="bold">y = f(x)</text>
+    <path d="M218 185 Q240 160 262 172 Q280 180 307 155" stroke="#a5d6a7" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <rect x="62" y="95" width="68" height="32" fill="#f9a825" rx="12" opacity=".9"/>
+    <text x="96" y="116" font-family="serif" font-size="18" fill="white" font-weight="bold" text-anchor="middle" font-style="italic">f(x)</text>
+    <rect x="355" y="78" width="110" height="26" fill="rgba(255,255,255,0.85)" rx="8"/>
+    <text x="410" y="95" font-family="monospace" font-size="12" fill="#1565c0" font-weight="bold" text-anchor="middle">y = 2.5x + 3</text>
+  </svg><span class="kicker">RECURSO EDUCATIVO DIGITAL</span><h1>🌾 Reto f(x)</h1><p style="font-size:1.18rem;font-weight:750">Resolviendo problemas con funciones en contextos rurales</p><p>La Institución Educativa Rural Buenos Aires necesita investigadores matemáticos. Descubre cómo las funciones ayudan a comprender cosechas, cercas, agua, plagas y decisiones económicas de la vereda.</p><div class="actions" style="justify-content:center"><button onclick="go('inicio')">🚀 Aceptar la misión</button><a class="btn" href="#objetivo">🎯 Ver objetivo</a></div></header>
+<nav><button class="active" data-tab="inicio" onclick="go('inicio')">🌱 Inicio</button><button data-tab="m1" onclick="go('m1')">🔎 Misión 1</button><button data-tab="m2" onclick="go('m2')">📈 Misión 2</button><button data-tab="m3" onclick="go('m3')">🧮 Misión 3</button><button data-tab="cierre" onclick="go('cierre')">🏆 Cierre</button></nav>
+<main>
+<section id="inicio" class="panel tab"><span class="tag">RECURSO EDUCATIVO DIGITAL</span><h2>¡Comienza tu aventura matemática!</h2>
+<div class="grid"><div><svg viewBox="0 0 760 280" role="img" aria-label="Ilustración de una finca, montañas, cultivos y tanque de agua"><rect width="760" height="280" fill="#e2f5ff"/><circle cx="660" cy="45" r="25" fill="#ffd46b"/><path d="M0 155 130 45 250 158 390 60 550 160 670 75 760 150V280H0Z" fill="#9bcba2"/><path d="M0 195Q180 140 340 195T760 185V280H0Z" fill="#64a96b"/><rect x="70" y="145" width="125" height="86" fill="#f0d19b"/><path d="M55 150 132 96 210 150Z" fill="#a95d42"/><rect x="119" y="185" width="28" height="46" fill="#80502e"/><path d="M260 245 360 170 460 245" fill="#3b8d4d"/><path d="M285 245 360 198 435 245" fill="#e9cb86"/><g fill="#347a40"><circle cx="530" cy="190" r="30"/><circle cx="566" cy="180" r="34"/><circle cx="596" cy="198" r="26"/></g><rect x="678" y="160" width="46" height="70" rx="5" fill="#8bc8de" stroke="#286d88" stroke-width="3"/><ellipse cx="701" cy="160" rx="23" ry="8" fill="#c6edf7" stroke="#286d88" stroke-width="3"/><g fill="#173f2a" font-size="16" font-weight="bold"><text x="72" y="260">Casa</text><text x="310" y="263">Cultivos</text><text x="540" y="255">Frutales</text><text x="670" y="263">Agua</text></g></svg><div class="callout"><b>Pregunta guía:</b> ¿cómo puede una función ayudarnos a predecir una cosecha, calcular materiales o saber cuándo una venta genera ganancias?</div></div>
+<div class="card" id="objetivo"><h3>🎯 Objetivo de aprendizaje</h3><p>Interpretar, representar y evaluar funciones lineales, cuadráticas y exponenciales para modelar situaciones rurales, resolver problemas y justificar conclusiones con expresiones, tablas y gráficas.</p><h3>📏 Estándar relacionado</h3><p>Referente de pensamiento variacional (grados 10°–11°): analizar relaciones de cambio, representar situaciones con expresiones algebraicas, tablas y gráficas, y modelar fenómenos para resolver problemas.</p><p class="muted">Síntesis pedagógica del Estándar Básico de Competencias en Matemáticas del MEN; no es una cita textual.</p></div></div>
+<div class="grid"><div class="card"><h3>📚 Referentes curriculares</h3>
+<p><b>DBA 7 · Referente principal</b></p><blockquote>Resuelve problemas mediante el uso de las propiedades de las funciones y usa representaciones tabulares, gráficas y algebraicas para estudiar la variación, la tendencia numérica y las razones de cambio entre magnitudes.</blockquote>
+<p><b>EBC-1 · Conexión con funciones</b></p><blockquote>Analizo las relaciones y propiedades entre las expresiones algebraicas y las gráficas de funciones polinómicas y racionales y de sus derivadas.</blockquote>
+<p><b>EBC-2 · Aplicación a magnitudes</b></p><blockquote>Resuelvo y formulo problemas que involucren magnitudes cuyos valores medios se suelen definir indirectamente como razones entre valores de otras magnitudes, como velocidad media, aceleración y densidad medias.</blockquote>
+<p><b>EBC-3 · Representación geométrica</b></p><blockquote>Reconozco y describo curvas y/o lugares geométricos.</blockquote>
+<p><b>DBA 2 · Apoyo conceptual</b></p><blockquote>Utiliza las propiedades algebraicas de equivalencia y de orden de los números reales para comprender y crear estrategias que permitan compararlos y comparar subconjuntos de ellos (por ejemplo, intervalos).</blockquote>
+<p><b>DBA 3 · Aplicación a razones entre magnitudes</b></p><blockquote>Resuelve problemas que involucran el significado de medidas de magnitudes relacionales (velocidad media, aceleración media) a partir de tablas, gráficas y expresiones algebraicas.</blockquote>
+<p><b>DBA 5 · Conexión geométrica</b></p><blockquote>Explora y describe las propiedades de los lugares geométricos y de sus transformaciones a partir de diferentes representaciones.</blockquote>
+<p class="muted">Los enunciados anteriores se incorporan según el texto compartido por la docente. El DBA 7 y EBC-1 son los referentes más cercanos al foco de funciones; los demás amplían o apoyan conexiones específicas. Conviene verificar los códigos y la versión del documento curricular institucional antes de la entrega final.</p>
+<a href="https://www.colombiaaprende.edu.co/sites/default/files/files_public/2022-06/DBA_Matematicas-min.pdf" target="_blank" rel="noopener">Consultar DBA de Matemáticas (MEN) ↗</a></div><div class="card"><h3>👧 Conoce a Sara</h3><p>Sara será tu compañera de aprendizaje. La encontrarás en cada misión con pistas y mensajes para ayudarte a interpretar situaciones rurales, resolver actividades y explicar tus resultados.</p></div><div class="card"><h3>🧭 Ruta de aprendizaje</h3><ol><li>Descubrir qué es una función.</li><li>Modelar tres tipos de funciones.</li><li>Resolver problemas rurales.</li><li>Diseñar y compartir un modelo propio.</li></ol></div></div>
+<h3>🎬 Videos y recursos externos</h3><div class="grid"><div class="video"><h3>▶ Funciones matemáticas</h3><p>Concepto, variables y evaluación de funciones.</p><a href="https://www.youtube.com/results?search_query=funciones+matematicas+explicacion+grado+decimo" target="_blank" rel="noopener">Buscar videos ↗</a></div><div class="video"><h3>📐 Colombia Aprende</h3><p>Recurso de clasificación de funciones para grado décimo.</p><a href="https://www.colombiaaprende.edu.co/contenidos-para-aprender/clasificacion-de-funciones" target="_blank" rel="noopener">Abrir recurso ↗</a></div><div class="video"><h3>📊 GeoGebra</h3><p>Representa funciones y observa sus gráficas.</p><a href="https://www.geogebra.org/graphing" target="_blank" rel="noopener">Abrir GeoGebra ↗</a></div></div><div class="actions"><button onclick="go('m1')">Comenzar Misión 1 →</button></div></section>
+
+<section id="m1" class="panel tab hidden"><span class="tag">INICIO · MISIÓN 1</span><h2>🔎 Descubriendo las funciones</h2><div class="sara-card"><div class="sara-avatar"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sara, guía del recurso"><circle cx="32" cy="32" r="32" fill="#e8f5e9"/><ellipse cx="32" cy="26" rx="12" ry="13" fill="#d4956a"/><path d="M20 22 Q32 14 44 22 Q40 16 32 15 Q24 16 20 22Z" fill="#3e2723"/><path d="M20 22 Q18 38 22 46 Q26 50 28 48 Q24 40 22 30Z" fill="#3e2723"/><path d="M44 22 Q46 38 42 46 Q38 50 36 48 Q40 40 42 30Z" fill="#3e2723"/><ellipse cx="27" cy="27" rx="2.5" ry="3" fill="#1a1a1a"/><ellipse cx="37" cy="27" rx="2.5" ry="3" fill="#1a1a1a"/><path d="M27 35 Q32 40 37 35" stroke="#7c3a1e" stroke-width="1.8" fill="none" stroke-linecap="round"/><rect x="20" y="40" width="24" height="18" fill="#1565c0" rx="4"/><text x="32" y="53" font-family="serif" font-size="9" fill="white" text-anchor="middle" font-style="italic">f(x)</text></svg></div><div class="sara-copy"><div class="sara-name">👋 Sara, tu guía</div><p>¡Hola, investigador! 🌾 En esta misión descubrirás cómo las relaciones del campo se convierten en funciones. Observa cada ejemplo y comprueba tus respuestas.</p></div></div><p>Don Libardo siembra maíz. Para practicar, usaremos el modelo proporcional <b>f(x)=2,5x</b>, donde x es el área sembrada en m² y f(x) estima el número de mazorcas.</p><div class="blue"><b>Importante:</b> es un modelo simplificado basado en un promedio. En una cosecha real influyen la semilla, el clima, el suelo y el manejo; el resultado no garantiza una cantidad exacta de mazorcas.</div>
+<div class="card video" id="teacherVideo"><h3>🎬 Video introductorio creado por la docente</h3><p>Antes de empezar, observa <b>“Funciones matemáticas en el contexto rural”</b>. Después, continúa con las actividades interactivas de la misión.</p><div class="video-frame"><iframe width="100%" height="315" src="https://www.youtube.com/embed/V1d7Gq8OIRs" title="Funciones matemáticas en el contexto rural" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><p class="activity-note">Si el reproductor no carga, abre el video directamente en YouTube:</p><p class="activity-note">Si el reproductor no carga dentro de la página, puedes abrir el video directamente en YouTube.</p><p><a href="https://www.youtube.com/watch?v=V1d7Gq8OIRs" target="_blank" rel="noopener">▶ Ver “Funciones matemáticas en el contexto rural” en YouTube ↗</a></p></div>
+<h3>¿Qué es una función?</h3><p>Una función es una regla que asigna a cada entrada permitida x exactamente una salida f(x).</p><div class="formula">f(x) = 2,5x</div><div class="grid"><div class="card"><b>Variable independiente (x)</b><p>Área sembrada, en m².</p></div><div class="card"><b>Variable dependiente f(x)</b><p>Estimación de mazorcas.</p></div><div class="card"><b>Dominio</b><p>Valores permitidos de x; aquí x ≥ 0, limitado al área disponible.</p></div><div class="card"><b>Rango</b><p>Salidas que produce la función para el dominio elegido.</p></div></div>
+<h3>🌾 Clasifica cada relación del campo</h3>
+<p>Arrastra cada tarjeta a “Sí es función” o “No es función”. En celular, toca una tarjeta para seleccionarla y después toca la zona de destino.</p>
+<div id="dragCards" class="card" aria-label="Tarjetas para clasificar">
+  <button type="button" class="drag-card" draggable="true" data-answer="yes" onclick="selectDragCard(this)" ondragstart="dragStart(event)">Área sembrada → mazorcas</button>
+  <button type="button" class="drag-card" draggable="true" data-answer="no" onclick="selectDragCard(this)" ondragstart="dragStart(event)">Una vaca → varios precios distintos al mismo tiempo</button>
+  <button type="button" class="drag-card" draggable="true" data-answer="yes" onclick="selectDragCard(this)" ondragstart="dragStart(event)">Día → litros de lluvia registrados ese día</button>
+  <button type="button" class="drag-card" draggable="true" data-answer="no" onclick="selectDragCard(this)" ondragstart="dragStart(event)">Un precio → varios kilos diferentes para ese mismo precio fijo</button>
+</div>
+<div class="grid">
+  <div class="card"><h4>✅ Sí es función</h4><div class="drop-zone" id="dropYes" data-zone="yes" ondragover="allowDrop(event)" ondrop="dropCard(event)" onclick="tapDrop('yes')">Suelta aquí las tarjetas</div></div>
+  <div class="card"><h4>❌ No es función</h4><div class="drop-zone" id="dropNo" data-zone="no" ondragover="allowDrop(event)" ondrop="dropCard(event)" onclick="tapDrop('no')">Suelta aquí las tarjetas</div></div>
+</div>
+<div class="actions"><button onclick="checkDrag()">Verificar clasificación ✓</button><button class="secondary" onclick="resetDrag()">Reiniciar ↻</button></div>
+<p id="dragOut" class="answer feedback" aria-live="polite"></p>
+<h3>Resolvamos paso a paso</h3><p><b>1.</b> Identifica la regla: f(x)=2,5x.</p><p><b>2.</b> Sustituye x=10: f(10)=2,5×10.</p><p><b>3.</b> Calcula: f(10)=25 mazorcas estimadas.</p><p><b>4.</b> Interpreta: según este modelo, 10 m² corresponden a una estimación de 25 mazorcas.</p><table><tr><th>Área x (m²)</th><th>Operación</th><th>f(x) estimada</th></tr><tr><td>0</td><td>2,5×0</td><td>0</td></tr><tr><td>2</td><td>2,5×2</td><td>5</td></tr><tr><td>4</td><td>2,5×4</td><td>10</td></tr><tr><td>10</td><td>2,5×10</td><td>25</td></tr><tr><td>20</td><td>2,5×20</td><td>50</td></tr></table>
+
+<div class="card">
+<h3>📐 Completa el valor que falta: ¿cuál es la pendiente?</h3>
+<p>Con los puntos (2, 5) y (4, 10), completa la operación. Escribe el valor que reemplaza el signo de interrogación.</p>
+<div class="formula slope-formula">m = <span class="fraction"><span class="numerator">10 − 5</span><span class="denominator">4 − 2</span></span> = <b>?</b></div>
+<label for="slopeAnswer">La pendiente m es:</label>
+<input class="inline-answer" id="slopeAnswer" type="number" step="0.1" placeholder="?">
+<button onclick="checkSlope()">Comprobar pendiente ✓</button>
+<p id="slopeOut" class="answer feedback" aria-live="polite"></p>
+</div>
+<h3>🧮 Comprueba tus respuestas</h3><div class="row"><div><label for="m1a">¿Cuánto es f(4)?</label><input id="m1a" type="number"></div><div><label for="m1b">¿Cuánto es f(10)?</label><input id="m1b" type="number"></div><div><label for="m1c">¿Cuál es la pendiente?</label><input id="m1c" type="number" step=".1"></div></div><div class="actions"><button onclick="checkM1()">Comprobar ✓</button><button class="secondary" onclick="['m1a','m1b','m1c'].forEach(i=>document.getElementById(i).value='');say('m1out','Respuestas reiniciadas.',true)">Reiniciar</button></div><p id="m1out" class="answer"></p><h3>🎮 Quiz rápido</h3><p>Usando f(x)=2,5x, ¿cuánto es f(8)?</p><div class="grid"><button class="secondary" onclick="quiz('q1',false,'Revisa: 2,5×8=20.')">A) 16</button><button class="secondary" onclick="quiz('q1',true,'¡Correcto! 2,5×8=20.')">B) 20</button><button class="secondary" onclick="quiz('q1',false,'Revisa: 2,5×8=20.')">C) 25</button><button class="secondary" onclick="quiz('q1',false,'Revisa: 2,5×8=20.')">D) 10</button></div><p id="q1" class="answer"></p><div class="actions"><a class="btn" href="https://www.geogebra.org/graphing" target="_blank" rel="noopener">Explorar gráfica en GeoGebra ↗</a><button onclick="go('m2')">Avanzar a Misión 2 →</button></div></section>
+
+<section id="m2" class="panel tab hidden"><span class="tag">DESARROLLO · MISIÓN 2</span><div class="sara-card"><div class="sara-avatar"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sara, guía del recurso"><circle cx="32" cy="32" r="32" fill="#e8f5e9"/><ellipse cx="32" cy="26" rx="12" ry="13" fill="#d4956a"/><path d="M20 22 Q32 14 44 22 Q40 16 32 15 Q24 16 20 22Z" fill="#3e2723"/><path d="M20 22 Q18 38 22 46 Q26 50 28 48 Q24 40 22 30Z" fill="#3e2723"/><path d="M44 22 Q46 38 42 46 Q38 50 36 48 Q40 40 42 30Z" fill="#3e2723"/><ellipse cx="27" cy="27" rx="2.5" ry="3" fill="#1a1a1a"/><ellipse cx="37" cy="27" rx="2.5" ry="3" fill="#1a1a1a"/><path d="M27 35 Q32 40 37 35" stroke="#7c3a1e" stroke-width="1.8" fill="none" stroke-linecap="round"/><rect x="20" y="40" width="24" height="18" fill="#1565c0" rx="4"/><text x="32" y="53" font-family="serif" font-size="9" fill="white" text-anchor="middle" font-style="italic">f(x)</text></svg></div><div class="sara-copy"><div class="sara-name">👋 Sara, tu guía</div><p>¡Vamos con la siguiente misión! 📈 Te acompañaré a comparar funciones lineales, cuadráticas y exponenciales. Fíjate en cómo cambia cada situación rural.</p></div></div><h2>📈 Modelando la realidad: tres historias del campo</h2><p>Las funciones no se comportan igual. Compara los modelos y recuerda que sus resultados solo tienen sentido dentro del contexto y dominio indicado.</p>
+<details open><summary>📏 Función lineal: los postes de la cerca</summary><p>Doña Rosa necesita 3 postes por metro de cerca y 2 postes adicionales para las esquinas.</p><div class="formula">P(x)=3x+2</div><p>Para 15 metros: P(15)=3×15+2=47 postes.</p><div class="row"><div><label for="fenceX">Metros de cerca (x)</label><input id="fenceX" type="number" min="0" step="1" value="15"></div><button onclick="calcFence()">Calcular postes</button></div><p id="fenceOut" class="answer"></p></details>
+<details open><summary>🪣 Función cuadrática: modelo hipotético del tanque</summary><p>Para estudiar la forma de una parábola, usamos el modelo hipotético h(t)=−t²+10t, donde t son horas y h(t) es un nivel relativo en centímetros.</p><div class="formula">h(t)=−t²+10t, para 0≤t≤10</div><p>El máximo ocurre en t=−b/(2a)=5 horas. h(5)=25 cm. El modelo baja después; no debe interpretarse como tanque real sin datos que justifiquen ese comportamiento.</p><div class="row"><div><label for="tankT">Tiempo (0 a 10 horas)</label><input id="tankT" type="number" min="0" max="10" step=".5" value="8"></div><button onclick="calcTank()">Calcular nivel</button></div><p id="tankOut" class="answer"></p></details>
+<details open><summary>🦠 Función exponencial: una plaga que se duplica</summary><p>En un ejemplo simplificado, hay 5 insectos al inicio y la cantidad se duplica cada día.</p><div class="formula">N(d)=5×2ᵈ</div><p>En 3 días: N(3)=5×2³=40 insectos. Es un modelo de crecimiento simplificado, no una predicción agrícola garantizada.</p><div class="row"><div><label for="pestD">Días (0 a 10)</label><input id="pestD" type="number" min="0" max="10" step="1" value="3"></div><button onclick="calcPest()">Estimar cantidad</button></div><p id="pestOut" class="answer"></p></details>
+
+<h3>✍️ Calcula y completa tus respuestas</h3>
+<p class="activity-note">Resuelve cada expresión y escribe el resultado. Al comprobar, escucharás un sonido diferente según tu respuesta.</p>
+<div class="grid">
+  <div class="card"><h4>📏 Función lineal</h4><p>Para P(x)=3x+2, calcula P(5).</p><label for="answerLinear">P(5) =</label><input id="answerLinear" class="inline-answer" type="number" placeholder="?"></div>
+  <div class="card"><h4>🪣 Función cuadrática</h4><p>Para h(t)=−t²+10t, calcula h(8).</p><label for="answerQuad">h(8) =</label><input id="answerQuad" class="inline-answer" type="number" placeholder="?"></div>
+  <div class="card"><h4>🦠 Función exponencial</h4><p>Para N(d)=5×2ᵈ, calcula N(4).</p><label for="answerExp">N(4) =</label><input id="answerExp" class="inline-answer" type="number" placeholder="?"></div>
+</div>
+<div class="actions"><button onclick="checkM2Answers()">Comprobar respuestas ✓</button><button class="secondary" onclick="resetM2Answers()">Reiniciar ↻</button></div>
+<p id="m2AnswersOut" class="answer feedback" aria-live="polite"></p>
+<h3>📊 Explora las gráficas</h3><div class="row"><div><label for="graphType">Elige una función</label><select id="graphType" onchange="drawGraph()"><option value="linear">Lineal: P(x)=3x+2</option><option value="quad">Cuadrática: h(x)=−x²+10x</option><option value="exp">Exponencial: N(x)=5×2ˣ</option></select></div><button onclick="drawGraph()">Actualizar gráfica</button></div><canvas id="graph" width="760" height="300" aria-label="Gráfica de la función seleccionada"></canvas><p class="muted">Gráfica orientativa. Los ejes y la escala dependen del modelo elegido.</p>
+<h3>🎮 Relaciona cada situación</h3><div class="row"><div><label for="match1">Postes según metros</label><select id="match1"><option value="">Elige…</option><option value="lin">Lineal</option><option value="quad">Cuadrática</option><option value="exp">Exponencial</option></select></div><div><label for="match2">Nivel con forma de parábola</label><select id="match2"><option value="">Elige…</option><option value="lin">Lineal</option><option value="quad">Cuadrática</option><option value="exp">Exponencial</option></select></div><div><label for="match3">Plaga que se duplica</label><select id="match3"><option value="">Elige…</option><option value="lin">Lineal</option><option value="quad">Cuadrática</option><option value="exp">Exponencial</option></select></div></div><div class="actions"><button onclick="checkMatch()">Comprobar ✓</button><a class="btn" href="https://www.geogebra.org/graphing" target="_blank" rel="noopener">Abrir GeoGebra ↗</a></div><p id="matchOut" class="answer"></p><button onclick="go('m3')">Avanzar a Misión 3 →</button></section>
+
+<section id="m3" class="panel tab hidden"><span class="tag">DESARROLLO · MISIÓN 3</span><h2>🧮 Resolviendo problemas para la vereda</h2><div class="sara-card"><div class="sara-avatar"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sara, guía del recurso"><circle cx="32" cy="32" r="32" fill="#e8f5e9"/><ellipse cx="32" cy="26" rx="12" ry="13" fill="#d4956a"/><path d="M20 22 Q32 14 44 22 Q40 16 32 15 Q24 16 20 22Z" fill="#3e2723"/><path d="M20 22 Q18 38 22 46 Q26 50 28 48 Q24 40 22 30Z" fill="#3e2723"/><path d="M44 22 Q46 38 42 46 Q38 50 36 48 Q40 40 42 30Z" fill="#3e2723"/><ellipse cx="27" cy="27" rx="2.5" ry="3" fill="#1a1a1a"/><ellipse cx="37" cy="27" rx="2.5" ry="3" fill="#1a1a1a"/><path d="M27 35 Q32 40 37 35" stroke="#7c3a1e" stroke-width="1.8" fill="none" stroke-linecap="round"/><rect x="20" y="40" width="24" height="18" fill="#1565c0" rx="4"/><text x="32" y="53" font-family="serif" font-size="9" fill="white" text-anchor="middle" font-style="italic">f(x)</text></svg></div><div class="sara-copy"><div class="sara-name">👋 Sara, tu guía</div><p>¡Ya estás avanzando muy bien! 🚜 Ahora usaremos las funciones para analizar ganancias, caudal y temperatura en situaciones de la vereda.</p></div></div><h3>💰 Problema 1: ¿cuándo hay ganancias?</h3><p>Una panelería estima costos C(x)=500x+8.000 pesos e ingresos I(x)=1.200x, donde x es el número de panelas vendidas.</p><div class="formula">U(x)=I(x)−C(x)=700x−8.000</div><p>Equilibrio: 700x−8.000=0, así que x≈11,43. Como las panelas se cuentan en unidades enteras, se deben vender <b>12 panelas</b> para tener utilidad positiva. Con 11 aún hay pérdida.</p><div class="row"><div><label for="candyX">Panelas vendidas</label><input id="candyX" type="number" min="0" step="1" value="12"></div><button onclick="calcProfit()">Calcular utilidad</button></div><p id="profitOut" class="answer"></p>
+<h3>💧 Problema 2: caudal en un canal</h3><p>Modelo aproximado: Q(d)=80−3d, donde d es distancia en metros y Q es caudal en litros por minuto.</p><div class="formula">Q(d)=80−3d</div><p>Para d=20: Q(20)=80−60=20 L/min. El dominio físico del modelo se limita a 0≤d≤26,67 m; un caudal negativo no tendría sentido aquí.</p><div class="row"><div><label for="flowD">Distancia (0 a 26,67 m)</label><input id="flowD" type="number" min="0" max="26.6667" step=".5" value="20"></div><button onclick="calcFlow()">Calcular caudal</button></div><p id="flowOut" class="answer"></p>
+<h3>🏔️ Problema 3: altura y temperatura</h3><p>Modelo ilustrativo: T(h)=22−0,006(h−500), donde h es la altura en metros sobre el nivel del mar. Para este ejemplo consideramos h≥500 m.</p><div class="formula">T(h)=22−0,006(h−500)</div><p>Si un cultivo requiere entre 18 °C y 24 °C, dentro de este modelo el intervalo aproximado es de 500 m a 1.167 m. Esto no sustituye datos climáticos locales ni recomendaciones agronómicas.</p><h3>🚜 Actividad de ampliación: velocidad media</h3><p>Un tractor recorre 18 kilómetros en 1,5 horas para transportar insumos. La velocidad media se calcula como distancia dividida entre tiempo: v = d/t. Esta actividad conecta el uso de funciones y tablas con el DBA 3 y el EBC-2.</p><div class="formula">v = distancia ÷ tiempo</div><div class="row"><div><label for="distanceKm">Distancia (km)</label><input id="distanceKm" type="number" min="0" step=".1" value="18"></div><div><label for="timeHours">Tiempo (horas)</label><input id="timeHours" type="number" min=".01" step=".1" value="1.5"></div><button onclick="calcSpeed()">Calcular velocidad media</button></div><p id="speedOut" class="answer"></p>
+<div class="callout"><b>Reflexiona:</b> ¿por qué debemos comprobar que los datos, las unidades y el dominio tengan sentido antes de tomar decisiones reales?</div>
+<h3>🎮 Quiz de aplicación</h3><p>Usando Q(d)=80−3d, ¿cuánto caudal estima el modelo a 20 m?</p><div class="grid"><button class="secondary" onclick="quiz('qflow',false,'Sustituye d=20: 80−3(20)=20 L/min.')">A) 60 L/min</button><button class="secondary" onclick="quiz('qflow',false,'Sustituye d=20: 80−3(20)=20 L/min.')">B) 50 L/min</button><button class="secondary" onclick="quiz('qflow',true,'¡Correcto! 80−60=20 L/min.')">C) 20 L/min</button><button class="secondary" onclick="quiz('qflow',false,'Sustituye d=20: 80−3(20)=20 L/min.')">D) 0 L/min</button></div><p id="qflow" class="answer"></p><button onclick="go('cierre')">Avanzar al cierre →</button></section>
+
+<section id="cierre" class="panel tab hidden"><span class="tag">CIERRE · MISIÓN FINAL</span><div class="sara-card"><div class="sara-avatar"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sara, guía del recurso"><circle cx="32" cy="32" r="32" fill="#e8f5e9"/><ellipse cx="32" cy="26" rx="12" ry="13" fill="#d4956a"/><path d="M20 22 Q32 14 44 22 Q40 16 32 15 Q24 16 20 22Z" fill="#3e2723"/><path d="M20 22 Q18 38 22 46 Q26 50 28 48 Q24 40 22 30Z" fill="#3e2723"/><path d="M44 22 Q46 38 42 46 Q38 50 36 48 Q40 40 42 30Z" fill="#3e2723"/><ellipse cx="27" cy="27" rx="2.5" ry="3" fill="#1a1a1a"/><ellipse cx="37" cy="27" rx="2.5" ry="3" fill="#1a1a1a"/><path d="M27 35 Q32 40 37 35" stroke="#7c3a1e" stroke-width="1.8" fill="none" stroke-linecap="round"/><rect x="20" y="40" width="24" height="18" fill="#1565c0" rx="4"/><text x="32" y="53" font-family="serif" font-size="9" fill="white" text-anchor="middle" font-style="italic">f(x)</text></svg></div><div class="sara-copy"><div class="sara-name">👋 Sara, tu guía</div><p>¡Llegaste al reto final! 🏆 Ahora usa lo aprendido para proponer un modelo de tu finca o vereda y explicar qué significan tus resultados.</p></div></div><h2>🏆 Misión final: Mi función del campo</h2><p>Identifica una situación de tu finca o vereda y construye un modelo que ayude a comprenderla.</p><div class="grid"><div class="card"><h3>🌱 Fase 1. Identifica</h3><p>Describe un problema: venta de productos, costo de insumos, uso de agua, distancia o producción.</p></div><div class="card"><h3>📋 Fase 2. Recoge datos</h3><p>Registra al menos 5 pares (x,y), con unidades. Si son datos simulados, indícalo.</p></div><div class="card"><h3>📈 Fase 3. Modela</h3><p>Escribe una función y representa los datos en tabla y gráfica. Justifica si el modelo es adecuado.</p></div><div class="card"><h3>💡 Fase 4. Decide</h3><p>Responde dos preguntas con la función, interpreta resultados y reconoce sus limitaciones.</p></div></div>
+<h3>🧠 Reto integrador</h3><p>Una finca vende aguacates: I(x)=1.500x y C(x)=800x+21.000. ¿Cuántos kilos enteros como mínimo debe vender para que la utilidad sea positiva?</p><div class="grid"><button class="secondary" onclick="quiz('qfinal',false,'U(x)=1.500x−(800x+21.000)=700x−21.000. Se requiere x>30.')">A) 20 kilos</button><button class="secondary" onclick="quiz('qfinal',false,'U(x)=700x−21.000. Se requiere x>30.')">B) 25 kilos</button><button class="secondary" onclick="quiz('qfinal',false,'30 kilos es punto de equilibrio: U(30)=0, no ganancia positiva.')">C) 30 kilos</button><button class="secondary" onclick="quiz('qfinal',true,'¡Correcto! Se requiere x>30; el mínimo entero es 31 kilos.')">D) 31 kilos</button></div><p id="qfinal" class="answer"></p>
+<h3>📝 Reto de salida</h3><p>Una productora vende cubetas de huevos a $15.000 cada una. Escribe la función de ingreso y calcula cuánto recibe por 7 cubetas.</p><label for="exitAnswer">Tu función y cálculo</label><textarea id="exitAnswer" rows="3" placeholder="I(x)=...; I(7)=..."></textarea><div class="actions"><button onclick="checkExit()">Comprobar respuesta</button></div><p id="exitOut" class="answer"></p>
+<h3>📊 Autoevaluación</h3><div class="card"><label><input type="checkbox" class="rubric"> Identifico las variables independiente y dependiente.</label><label><input type="checkbox" class="rubric"> Escribo una función para representar una situación.</label><label><input type="checkbox" class="rubric"> Sustituyo valores y calculo correctamente.</label><label><input type="checkbox" class="rubric"> Interpreto el resultado con unidades y contexto.</label><label><input type="checkbox" class="rubric"> Reviso dominio y limitaciones del modelo.</label><p id="rubricOut" class="answer">Marca tus avances para ver tu autoevaluación.</p></div>
+<h3>🎓 Diploma de Investigador Matemático Rural</h3><div class="row"><div><label for="studentName">Nombre completo del estudiante</label><input id="studentName" type="text" placeholder="Escribe el nombre"></div><button onclick="makeDiploma()">Generar diploma</button></div><div id="cert" class="certificate hidden"><div style="font-size:2.2rem">🏅🌾</div><p><b>INSTITUCIÓN EDUCATIVA RURAL BUENOS AIRES</b></p><h2>Diploma de reconocimiento</h2><p>Se otorga a</p><h3 id="certName" style="font-size:1.8rem;text-decoration:underline"></h3><p>por completar el recurso educativo digital</p><h3>“Reto f(x): Resolviendo problemas con funciones en contextos rurales”</h3><p>y demostrar habilidades para interpretar, representar y resolver situaciones mediante funciones matemáticas.</p><p>Arboletes, Antioquia · Grado décimo</p><p style="margin-top:28px">____________________________<br>Ana María Palacios Mosquera · Docente</p><button class="no-print" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button></div>
+<h3>🌻 Feria Matemática del Campo</h3><ol><li>Presenta la situación, los datos y la función.</li><li>Explica el procedimiento y qué significa la respuesta.</li><li>Muestra una tabla o gráfica.</li><li>Escucha recomendaciones y reconoce las limitaciones del modelo.</li></ol><div class="callout"><b>Evidencia de aprendizaje:</b> el estudiante formula o interpreta una función, resuelve un problema contextualizado, comunica el procedimiento y valora si la respuesta tiene sentido. Esta evidencia se alinea principalmente con el DBA 7 y EBC-1. Las actividades de gráficas y parábolas se conectan con EBC-3 y DBA 5; las razones entre magnitudes pueden ampliarse con situaciones de velocidad media, aceleración o densidad para trabajar EBC-2 y DBA 3. El DBA 2 se moviliza al interpretar desigualdades, intervalos y restricciones del dominio.</div><div class="actions no-print"><button onclick="window.print()">🖨️ Imprimir recurso / Guardar PDF</button><button class="secondary" onclick="go('inicio')">↺ Volver al inicio</button></div></section>
+</main><footer><b>Reto f(x) · Matemáticas desde el campo 🌾</b><br>Institución Educativa Rural Buenos Aires · Arboletes, Antioquia · Grado 10°<br>Diseño pedagógico: Ana María Palacios Mosquera · 2026</footer>
+<script>
+function go(id){document.querySelectorAll('.tab').forEach(x=>x.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('nav [data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));window.scrollTo({top:0,behavior:'smooth'});if(id==='m2')setTimeout(drawGraph,70)}
+let audioCtx=null;
+function playFeedback(ok){
+  try{
+    const Ctx=window.AudioContext||window.webkitAudioContext;
+    if(!Ctx)return;
+    if(!audioCtx)audioCtx=new Ctx();
+    if(audioCtx.state==='suspended')audioCtx.resume();
+    const now=audioCtx.currentTime;
+    const notes=ok?[660,880]:[220,165];
+    notes.forEach((freq,i)=>{
+      const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
+      osc.type='sine';osc.frequency.value=freq;
+      gain.gain.setValueAtTime(0.0001,now+i*0.13);
+      gain.gain.exponentialRampToValueAtTime(0.12,now+i*0.13+0.025);
+      gain.gain.exponentialRampToValueAtTime(0.0001,now+i*0.13+0.16);
+      osc.connect(gain);gain.connect(audioCtx.destination);
+      osc.start(now+i*0.13);osc.stop(now+i*0.13+0.18);
+    });
+  }catch(e){}
+}
+function say(id,t,ok){let e=document.getElementById(id);if(e){e.textContent=t;e.className='answer '+(ok?'good':'bad');}playFeedback(ok)}
+function quiz(id,ok,t){say(id,t,ok)}
+function checkM1(){let ids=['m1a','m1b','m1c'];if(ids.some(i=>document.getElementById(i).value===''))return say('m1out','Completa las tres respuestas.',false);let a=ids.map(i=>Number(document.getElementById(i).value)),n=a.filter((v,i)=>Math.abs(v-[10,25,2.5][i])<.001).length;say('m1out',n===3?'¡Excelente! Las tres respuestas son correctas.':`Tienes ${n} de 3 correctas. f(4)=10; f(10)=25; la pendiente es 2,5.`,n===3)}
+
+let selectedDragCard=null;
+function selectDragCard(card){
+  selectedDragCard=card;
+  document.querySelectorAll('.drag-card').forEach(b=>b.style.outline='');
+  card.style.outline='3px solid #e0ae36';
+}
+function dragStart(event){selectedDragCard=event.currentTarget;event.dataTransfer.setData('text/plain',event.currentTarget.id||'drag-card');}
+function allowDrop(event){event.preventDefault();event.currentTarget.classList.add('over');}
+function dropCard(event){
+  event.preventDefault();event.currentTarget.classList.remove('over');
+  const card=selectedDragCard||document.querySelector('.drag-card:focus');
+  if(card && (event.currentTarget.id==='dropYes'||event.currentTarget.id==='dropNo')){
+    event.currentTarget.appendChild(card);card.style.outline='';selectedDragCard=null;playFeedback(true);
+  }
+}
+function tapDrop(zone){
+  if(!selectedDragCard)return;
+  const target=document.getElementById(zone==='yes'?'dropYes':'dropNo');
+  target.appendChild(selectedDragCard);selectedDragCard.style.outline='';selectedDragCard=null;playFeedback(true);
+}
+function checkDrag(){
+  const yes=[...document.getElementById('dropYes').querySelectorAll('.drag-card')];
+  const no=[...document.getElementById('dropNo').querySelectorAll('.drag-card')];
+  const total=yes.length+no.length;
+  if(total!==4)return say('dragOut','Clasifica las cuatro tarjetas antes de comprobar.',false);
+  const good=yes.every(c=>c.dataset.answer==='yes')&&no.every(c=>c.dataset.answer==='no');
+  say('dragOut',good?'¡Muy bien! Cada entrada tiene una única salida en las relaciones clasificadas como función.':'Revisa las tarjetas: una función asigna exactamente una salida a cada entrada. Si una entrada se asocia con varias salidas, no es función.',good);
+}
+function resetDrag(){
+  const home=document.getElementById('dragCards');
+  [...document.querySelectorAll('.drag-card')].forEach(c=>{c.style.outline='';home.appendChild(c)});
+  selectedDragCard=null;
+  document.getElementById('dragOut').textContent='';
+  document.getElementById('dragOut').className='answer feedback';
+}
+function checkSlope(){
+  const v=document.getElementById('slopeAnswer').value;
+  if(v==='')return say('slopeOut','Escribe el valor que falta.',false);
+  const ok=Math.abs(Number(v)-2.5)<0.001;
+  say('slopeOut',ok?'¡Correcto! (10−5)÷(4−2)=5÷2=2,5.':'Vuelve a calcular: primero 10−5=5 y 4−2=2; luego divide 5 entre 2.',ok);
+}
+function checkM2Answers(){
+  const ids=['answerLinear','answerQuad','answerExp'];
+  if(ids.some(id=>document.getElementById(id).value===''))return say('m2AnswersOut','Completa los tres resultados antes de comprobar.',false);
+  const vals=ids.map(id=>Number(document.getElementById(id).value));
+  const expected=[17,16,80];
+  const n=vals.filter((v,i)=>v===expected[i]).length;
+  say('m2AnswersOut',n===3?'¡Excelente! P(5)=17, h(8)=16 y N(4)=80.':`Tienes ${n} de 3 correctas. Revisa: P(5)=3×5+2; h(8)=−8²+10×8; N(4)=5×2⁴.`,n===3);
+}
+function resetM2Answers(){
+  ['answerLinear','answerQuad','answerExp'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('m2AnswersOut').textContent='';
+  document.getElementById('m2AnswersOut').className='answer feedback';
+}
+function calcFence(){let x=Number(fenceX.value);if(!Number.isInteger(x)||x<0)return say('fenceOut','Ingresa un número entero de metros igual o mayor que cero.',false);say('fenceOut',`P(${x})=3×${x}+2=${3*x+2} postes.`,true)}
+function calcTank(){let t=Number(tankT.value);if(t<0||t>10||tankT.value==='')return say('tankOut','Elige un tiempo entre 0 y 10 horas.',false);say('tankOut',`h(${t})=${(-t*t+10*t).toLocaleString('es-CO')} cm en este modelo hipotético.`,true)}
+function calcPest(){let d=Number(pestD.value);if(!Number.isInteger(d)||d<0||d>10||pestD.value==='')return say('pestOut','Ingresa un número entero de días entre 0 y 10.',false);say('pestOut',`N(${d})=5×2^${d}=${(5*2**d).toLocaleString('es-CO')} insectos estimados.`,true)}
+function checkMatch(){let vals=['match1','match2','match3'].map(i=>document.getElementById(i).value);if(vals.some(v=>!v))return say('matchOut','Selecciona una respuesta para cada situación.',false);let ok=vals.join(',')==='lin,quad,exp';say('matchOut',ok?'¡Correcto! Lineal, cuadrática y exponencial.':'Pista: recta (lineal), parábola (cuadrática), duplicación (exponencial).',ok)}
+function calcProfit(){let x=Number(candyX.value);if(!Number.isInteger(x)||x<0||candyX.value==='')return say('profitOut','Ingresa una cantidad entera no negativa.',false);let u=700*x-8000;say('profitOut',`U(${x})=${u.toLocaleString('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0})}. ${u>0?'Hay utilidad positiva.':u===0?'Está en equilibrio.':'Hay pérdida.'}`,true)}
+function calcFlow(){let d=Number(flowD.value);if(d<0||d>80/3||flowD.value==='')return say('flowOut','Usa una distancia entre 0 y 26,67 m para evitar un caudal negativo.',false);say('flowOut',`Q(${d})=${(80-3*d).toLocaleString('es-CO')} L/min.`,true)}
+function calcSpeed(){let d=Number(distanceKm.value),t=Number(timeHours.value);if(distanceKm.value===''||timeHours.value===''||d<0||t<=0||!Number.isFinite(d)||!Number.isFinite(t))return say('speedOut','Ingresa una distancia no negativa y un tiempo mayor que cero.',false);say('speedOut',`v = ${d} ÷ ${t} = ${(d/t).toLocaleString('es-CO',{maximumFractionDigits:2})} km/h de velocidad media.`,true)}
+function checkExit(){let t=exitAnswer.value.toLowerCase().replace(/\s/g,'');let f=/15000x|15000\*x|15000·x|15000\(x\)/.test(t),v=/105000|105\.000|105,000/.test(t);say('exitOut',f&&v?'¡Muy bien! I(x)=15.000x e I(7)=15.000×7=$105.000.':'Comprueba ambos pasos: I(x)=15.000x e I(7)=15.000×7=$105.000.',f&&v)}
+function makeDiploma(){let n=studentName.value.trim();if(!n){document.getElementById('cert').classList.remove('hidden');return say('certName','Primero escribe el nombre.',false)}certName.textContent=n;cert.classList.remove('hidden');cert.scrollIntoView({behavior:'smooth',block:'center'})}
+document.querySelectorAll('.rubric').forEach(c=>c.addEventListener('change',()=>{let a=[...document.querySelectorAll('.rubric')],n=a.filter(x=>x.checked).length;say('rubricOut',`Has marcado ${n} de ${a.length} criterios. ${n===a.length?'¡Completaste tu autoevaluación!':'Sigue practicando los criterios pendientes.'}`,n===a.length)}));
+function drawGraph(){let c=document.getElementById('graph');if(!c)return;let xctx=c.getContext('2d'),w=c.width,h=c.height,type=graphType.value;xctx.clearRect(0,0,w,h);let xmax=10,ymax=type==='exp'?Math.ceil((5*Math.pow(2,xmax))*1.08):type==='quad'?30:35,px=x=>48+x/xmax*(w-70),py=y=>h-32-y/ymax*(h-55);xctx.strokeStyle='#e0e9dc';xctx.fillStyle='#627368';xctx.font='12px Arial';for(let i=0;i<=5;i++){let y=ymax*i/5;xctx.beginPath();xctx.moveTo(42,py(y));xctx.lineTo(w-20,py(y));xctx.stroke();xctx.fillText(String(Math.round(y)),3,py(y)+4);let xx=2*i;xctx.beginPath();xctx.moveTo(px(xx),20);xctx.lineTo(px(xx),h-32);xctx.stroke();xctx.fillText(String(xx),px(xx)-3,h-10)}xctx.strokeStyle='#287d50';xctx.lineWidth=3;xctx.beginPath();for(let i=0;i<=300;i++){let x=xmax*i/300,y=type==='linear'?3*x+2:type==='quad'?-x*x+10*x:5*2**x,X=px(x),Y=py(Math.max(0,y));if(!i)xctx.moveTo(X,Y);else xctx.lineTo(X,Y)}xctx.stroke();xctx.fillStyle='#18563b';xctx.font='bold 14px Arial';xctx.fillText(type==='linear'?'P(x)=3x+2':type==='quad'?'h(x)=−x²+10x':'N(x)=5×2ˣ',w-170,17)}
+window.addEventListener('resize',()=>{if(!m2.classList.contains('hidden'))drawGraph()});
+
+document.querySelectorAll('.drop-zone').forEach(z=>z.addEventListener('dragleave',()=>z.classList.remove('over')));
+</script></body></html>
